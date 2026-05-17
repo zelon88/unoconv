@@ -1,3 +1,6 @@
+* 0.8z1
+- Remove deprecated setuptools dependency.
+
 * 0.8 - unreleased
 - Add option -M/--meta to add or update document metadata during conversion
 
