@@ -16,7 +16,6 @@
 
 from __future__ import print_function
 
-from distutils.version import LooseVersion
 import getopt
 import glob
 import os
@@ -25,7 +24,7 @@ import subprocess
 import sys
 import time
 
-__version__ = '0.7'
+__version__ = '0.8z1'
 
 doctypes = ('document', 'graphics', 'presentation', 'spreadsheet')
 
@@ -810,7 +809,7 @@ class Convertor:
             info(3, "Launching our own listener using %s." % office.binary)
             try:
                 product = self.svcmgr.createInstance("com.sun.star.configuration.ConfigurationProvider").createInstanceWithArguments("com.sun.star.configuration.ConfigurationAccess", UnoProps(nodepath="/org.openoffice.Setup/Product"))
-                if product.ooName not in ('LibreOffice', 'LOdev') or LooseVersion(product.ooSetupVersion) <= LooseVersion('3.3'):
+                if product.ooName not in ('LibreOffice', 'LOdev'):
                     ooproc = subprocess.Popen([office.binary, "-headless", "-invisible", "-nocrashreport", "-nodefault", "-nofirststartwizard", "-nologo", "-norestore", "-accept=%s" % op.connection], env=os.environ)
                 else:
                     ooproc = subprocess.Popen([office.binary, "--headless", "--invisible", "--nocrashreport", "--nodefault", "--nofirststartwizard", "--nologo", "--norestore", "--accept=%s" % op.connection], env=os.environ)
@@ -1161,7 +1160,7 @@ class Listener:
             else:
                 info(1, "Existing %s listener found, nothing to do." % product.ooName)
                 return
-            if product.ooName != "LibreOffice" or LooseVersion(product.ooSetupVersion) <= LooseVersion('3.3'):
+            if product.ooName != "LibreOffice":
                 cmd = [office.binary, "-headless", "-invisible", "-nocrashreport", "-nodefault", "-nologo", "-nofirststartwizard", "-norestore", "-accept=%s" % op.connection]
             else:
                 cmd = [office.binary, "--headless", "--invisible", "--nocrashreport", "--nodefault", "--nologo", "--nofirststartwizard", "--norestore", "--accept=%s" % op.connection]
