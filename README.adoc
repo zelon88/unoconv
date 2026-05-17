@@ -1,6 +1,24 @@
 = Automated conversion and styling using LibreOffice
 Dag Wieers <dag@wieers.com>
 
+== Unoconv is deprecated
+
+Please note that there is a rewrite of Unoconv called "Unoserver":
+https://github.com/unoconv/unoserver/
+
+We are running Unoserver successfully in production, and it's now the
+recommended solution.
+
+Unoserver does not have all the features of Unoconv, which features it
+will get depends on a combination of what people want, and if someone
+wants to implement it. 
+
+Until Unoserver has all the major features people need, Unoconv is in 
+bugfix mode, there will be no major changes. Once Unoserver has the major
+features of Unoconv, Unoconv will become unsupported.
+
+== Unoconv
+
 Universal Office Converter (unoconv) is a command line tool to convert any
 document format that LibreOffice can import to any document format that
 LibreOffice can export. It makes use of the LibreOffice's UNO bindings for
@@ -8,6 +26,7 @@ non-interactive conversion of documents.
 
 _For practical reasons we mention LibreOffice, but OpenOffice is supported by
 unoconv as well._
+
 
 == Installing unoconv
 unoconv can be installed using packages coming from your distribution, or
@@ -24,6 +43,18 @@ e.g. +libobasis4.4-xsltfilter+.
 
 IMPORTANT: Neglecting these requirements will cause unoconv to fail with
 unhelpful and confusing error messages.
+
+To find a good Python installation to use to run unoconv, do the following:
+
+To find which Python to use to run unoconv, you can try a script I made.
+
+----
+cd /tmp
+wget -l https://gist.githubusercontent.com/regebro/036da022dc7d5241a0ee97efdf1458eb/raw/1bc0655423d196acd79a5d9fa60d2baada8dd534/find_uno.py
+python3 find_uno.py
+----
+
+It should list all Pythons that have Libreoffice libraries installed.
 
 
 == How does unoconv work ?
@@ -80,7 +111,7 @@ But you can also force another python by using it to execute unoconv, e.g.:
 
     /opt/libreoffice4.4/program/python.bin unoconv -f pdf some-file.odt
 
-or on MacOS X:
+or on macOS:
 
     /Applications/LibreOffice.app/Contents/MacOS/python unoconv -f pdf some-file.odt
 
@@ -109,10 +140,10 @@ to create a headless X display for ooffice.
  - http://www.artofsolving.com/node/10
 
 
-== Using unoconv with MacOS X
-LibreOffice 3.6.0.1 or later is required to use unoconv under MacOS X.  This
+== Using unoconv with macOS
+LibreOffice 3.6.0.1 or later is required to use unoconv under macOS.  This
 is the first version distributed with an internal python script that works.
-No version of OpenOffice for MacOS X (3.4 is the current version) works because
+No version of OpenOffice for macOS (3.4 is the current version) works because
 the necessary internal files are not included inside the application.
 
 
@@ -132,7 +163,7 @@ is a list of probable causes and recommendations:
 
  - Test with SELinux in permissive mode
 
-It is recomended to open the unoconv script and modify the very first line to
+It is recommended to open the unoconv script and modify the very first line to
 point directly to your installed LibreOffice python binary, so replace this:
 
     #!/usr/bin/env python
@@ -209,7 +240,7 @@ It is recommended to follow all of the below steps to pinpoint the problem:
 
         # /opt/libreoffice4.4/program/python.bin -c 'import uno, unohelper'
 
-   * or alternatively, run the disribution python (with the distribution
+   * or alternatively, run the distribution python (with the distribution
      LibreOffice)
 
         # python -c 'import uno, unohelper'
@@ -254,6 +285,10 @@ interesting sources:
 
 == Other implementations
 Other implementations using python and UNO:
+
+ - unoserver
+   https://github.com/unoconv/unoserver/
+   
 
  - convwatch
    http://cgit.freedesktop.org/libreoffice/core/tree/bin/convwatch.py
